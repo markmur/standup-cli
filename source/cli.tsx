@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import React from "react";
-import { render } from "ink";
+import {render} from "ink";
 import meow from "meow";
 import App from "./ui";
 
@@ -51,9 +51,9 @@ const cli = meow(
 `,
 	{
 		flags: {},
-	}
+	},
 );
 
-const { command, args } = getCommand(cli);
+const {command, args} = getCommand(cli);
 
 render(<App command={command} args={args} />);

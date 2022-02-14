@@ -1,12 +1,12 @@
-import React, { FC } from "react";
-import { Text } from "ink";
+import React, {FC} from "react";
+import {Text} from "ink";
 import meow from "meow";
 import Gradient from "ink-gradient";
 import BigText from "ink-big-text";
 
 // Local
-import { SUPPORTED_COMMANDS } from "./cli";
-import io, { Task } from "./io";
+import {SUPPORTED_COMMANDS} from "./cli";
+import io, {Task} from "./io";
 
 interface Props {
 	command: string;
@@ -16,7 +16,7 @@ interface Props {
 
 const Space = () => <Text></Text>;
 
-const RemoveCommand: FC<{ args: Props["args"] }> = ({ args = [] }) => {
+const RemoveCommand: FC<{args: Props["args"]}> = ({args = []}) => {
 	const [number] = args;
 
 	if (isNaN(Number(number))) {
@@ -64,7 +64,7 @@ const ClearCommand: FC = () => {
 	);
 };
 
-const AddCommand: FC<{ args: Props["args"] }> = ({ args }) => {
+const AddCommand: FC<{args: Props["args"]}> = ({args}) => {
 	const handleAddTask = () => {
 		if (Array.isArray(args) && args.length > 0 && typeof args[0] === "string") {
 			io.addTask(args?.[0]);
@@ -82,7 +82,7 @@ const AddCommand: FC<{ args: Props["args"] }> = ({ args }) => {
 	);
 };
 
-const ListTasks: FC<{ date: string; tasks?: Task[] }> = ({ date, tasks }) => {
+const ListTasks: FC<{date: string; tasks?: Task[]}> = ({date, tasks}) => {
 	return (
 		<>
 			<Gradient name="rainbow">
@@ -93,7 +93,7 @@ const ListTasks: FC<{ date: string; tasks?: Task[] }> = ({ date, tasks }) => {
 			<Space />
 			<Text underline>Entries</Text>
 			{tasks?.length ? (
-				tasks?.map(({ id, content }, i) => (
+				tasks?.map(({id, content}, i) => (
 					<Text key={id}>{`	${i + 1}. ${content}`}</Text>
 				))
 			) : (
@@ -108,7 +108,7 @@ const ListTasks: FC<{ date: string; tasks?: Task[] }> = ({ date, tasks }) => {
 	);
 };
 
-const App: FC<Props> = ({ command, args }) => {
+const App: FC<Props> = ({command, args}) => {
 	let tasks;
 	const today = io.getTodaysDate();
 	const yesterday = io.getYesterdaysDate();
