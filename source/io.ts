@@ -31,11 +31,9 @@ class TaskManager {
 
     private FILENAME: string = path.join(this.PATH, "tasks.json")
 
-    private async init() {
+    private init() {
         this.ensureStorageExists()
-            .then(() => {
-                this.loadTasks()
-            })
+        this.loadTasks()
     }
 
     private sliceDate(date: string) {
@@ -54,7 +52,7 @@ class TaskManager {
     private async ensureStorageExists() {
         if (!this.fileExists(this.PATH)) {
             try {
-                await fs.promises.mkdir(this.PATH)
+                fs.mkdirSync(this.PATH)
                 return true
             } catch(error) {
                 return false
