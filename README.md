@@ -13,23 +13,23 @@ $ npm install --global standup-cli
 ## CLI
 
 ```
-	Usage
-	  $ standup
+Usage
+  $ standup
 
-	Commands
-		list				(default) List standup tasks for today
-		today				(alias) Run "list" command
-		yesterday			List standup stasks for yesterday
-		add					Add a task for today
-		remove <number>		Remove task from today
-		clear				Clear all tasks for today
+Commands
+	list			(default) List standup tasks for today
+	today			(alias) Run "list" command
+	yesterday		List standup stasks for yesterday
+	add			Add a task for today
+	remove <number>		Remove task from today
+	clear			Clear all tasks for today
 
-	Examples
-	  $ standup
-	  $ standup add "New task for today"
-	  $ standup list
-	  $ standup today
-	  $ standup yesterday
-	  $ standup remove 1
-	  $ standup clear
+Examples
+  $ standup
+  $ standup add "New task for today"
+  $ standup list
+  $ standup today
+  $ standup yesterday
+  $ standup remove 1
+  $ standup clear
 ```
