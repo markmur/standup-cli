@@ -25,7 +25,9 @@ const AddCommand: FC<{ args: Props["args"] }> = ({ args }) => {
 
 	return (
 		<>
-			<Text color="green">Enter a task:</Text>
+			<Text color="green" bold>
+				✔ Task added
+			</Text>
 		</>
 	);
 };
