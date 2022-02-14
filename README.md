@@ -2,7 +2,8 @@
 
 Manage standup entries from your terminal.
 
-<img width="851" alt="image" src="https://user-images.githubusercontent.com/2034704/153863424-032a7f0a-6b71-4d05-bb63-2e31ffe19833.png">
+<img width="1023" alt="image" src="https://user-images.githubusercontent.com/2034704/153878385-a556f6d8-37e7-4c2d-b38f-c1bf444ef96c.png">
+
 
 ## Install
 
