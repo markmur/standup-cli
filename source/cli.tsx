@@ -9,6 +9,8 @@ export enum SUPPORTED_COMMANDS {
 	LIST = "list",
 	TODAY = "today",
 	YESTERDAY = "yesterday",
+	REMOVE = "remove",
+	CLEAR = "clear",
 }
 
 const DEFAULT = "list";
@@ -31,10 +33,12 @@ const cli = meow(
 	  $ standup
 
 	Commands
-		add			Add a task for today
-		list		(default) List standup tasks for today
-		today		(alias) Run "list" command
-		yesterday	List standup stasks for yesterday
+		list				(default) List standup tasks for today
+		today				(alias) Run "list" command
+		yesterday			List standup stasks for yesterday
+		add				Add a task for today
+		remove <number>			Remove task from today
+		clear				Clear all tasks for today
 
 	Examples
 	  $ standup
@@ -42,6 +46,8 @@ const cli = meow(
 	  $ standup list
 	  $ standup today
 	  $ standup yesterday
+	  $ standup remove 1
+	  $ standup clear
 `,
 	{
 		flags: {},

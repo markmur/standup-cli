@@ -98,6 +98,21 @@ class TaskManager {
 
         this.writeData(clonedContents)
     }
+
+    removeTask(taskNumber: number) {
+        const date = this.getTodaysDate()
+        const clonedContents = { ...this.contents }
+
+        clonedContents.tasks[date]?.splice(taskNumber - 1, 1)
+        this.writeData(clonedContents)
+    }
+
+    clearTasks(date: string = this.getTodaysDate()) {
+        const clonedContents = { ...this.contents }
+
+        clonedContents.tasks[date] = []
+        this.writeData(clonedContents)
+    }
 }
 
 const manager = new TaskManager()
