@@ -369,6 +369,13 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
+"@types/node-persist@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@types/node-persist/-/node-persist-3.1.2.tgz#88020628a0124836e98e5c1060591b2dade2bb4a"
+  integrity sha512-aLFUB1951wOfR+tZ4f3TudLPblo9+PfnduMh6feuOTijD0Q6YkMdqPXSgQIjI23FGmCuoZaIZ9x6cvEG/TdiSg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*":
   version "17.0.17"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.17.tgz#a8ddf6e0c2341718d74ee3dc413a13a042c45a0c"

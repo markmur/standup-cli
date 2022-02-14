@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid"
 import path from "path"
 import fs from "fs"
+import os from "os"
 
 export interface Task {
     id: string
@@ -26,10 +27,15 @@ class TaskManager {
 
     private contents: Model = this.defaultContents
 
-    private PATH: string = path.join(__dirname, "./tasks.json")
+    private PATH: string = path.resolve(os.homedir(), ".standup-cli")
 
-    private init() {
-        this.loadTasks()
+    private FILENAME: string = path.join(this.PATH, "tasks.json")
+
+    private async init() {
+        this.ensureStorageExists()
+            .then(() => {
+                this.loadTasks()
+            })
     }
 
     private sliceDate(date: string) {
@@ -45,18 +51,31 @@ class TaskManager {
         }
     }
 
+    private async ensureStorageExists() {
+        if (!this.fileExists(this.PATH)) {
+            try {
+                await fs.promises.mkdir(this.PATH)
+                return true
+            } catch(error) {
+                return false
+            }
+        }
+
+        return true
+    }
+
     private writeData(data: Model) {
-        fs.writeFileSync(this.PATH, JSON.stringify(data, null, 2))
+        fs.writeFileSync(this.FILENAME, JSON.stringify(data, null, 2))
         this.contents = data;
     }
 
     private loadTasks() {
-        if (!this.fileExists(this.PATH)) {
+        if (!this.fileExists(this.FILENAME)) {
             this.writeData(this.defaultContents)
             return
         }
 
-        const contents = fs.readFileSync(this.PATH, 'utf8')
+        const contents = fs.readFileSync(this.FILENAME, 'utf8')
         this.contents = JSON.parse(contents)
     }
 
