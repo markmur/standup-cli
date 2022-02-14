@@ -11,11 +11,13 @@ export enum SUPPORTED_COMMANDS {
 	YESTERDAY = "yesterday",
 }
 
+const DEFAULT = "list";
+
 function getCommand(cli: meow.Result<any>): {
 	command: string;
 	args: string[];
 } {
-	const [command = "list", ...args] = cli.input;
+	const [command = DEFAULT, ...args] = cli.input;
 
 	return {
 		command,
@@ -29,7 +31,7 @@ const cli = meow(
 	  $ standup
 
 	Commands
-		add			Add a stask for today
+		add			Add a task for today
 		list		(default) List standup tasks for today
 		today		(alias) Run "list" command
 		yesterday	List standup stasks for yesterday
