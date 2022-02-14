@@ -1,4 +1,4 @@
-# Standup
+# standup-cli
 
 Manage standup entries from your terminal.
 
