@@ -6,7 +6,7 @@
 		"standup": "dist/cli.js"
 	},
 	"engines": {
-		"node": ">=10"
+		"node": ">=16.7"
 	},
 	"author": {
 		"email": "mark.murray.ie@gmail.com",
