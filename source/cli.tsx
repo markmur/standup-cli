@@ -34,9 +34,6 @@ const cli = meow(
 		today		(alias) Run "list" command
 		yesterday	List standup stasks for yesterday
 
-	Options
-		--name  Your name
-
 	Examples
 	  $ standup
 	  $ standup add "New task for today"
