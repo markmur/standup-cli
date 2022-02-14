@@ -20,7 +20,7 @@
 		"test": "xo && ava"
 	},
 	"files": [
-		"source/*.js"
+		"dist/*.js"
 	],
 	"dependencies": {
 		"@types/ink-big-text": "^1.2.1",
