@@ -2,7 +2,9 @@
 	"name": "standup-cli",
 	"version": "0.1.0",
 	"license": "MIT",
-	"bin": "dist/cli.js",
+	"bin": {
+		"standup": "dist/cli.js"
+	},
 	"engines": {
 		"node": ">=10"
 	},

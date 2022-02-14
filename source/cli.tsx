@@ -44,11 +44,7 @@ const cli = meow(
 	  $ standup yesterday
 `,
 	{
-		flags: {
-			name: {
-				type: "string",
-			},
-		},
+		flags: {},
 	}
 );
 
