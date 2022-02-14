@@ -1,10 +1,15 @@
 {
-	"name": "standup",
-	"version": "0.0.0",
+	"name": "standup-cli",
+	"version": "0.1.0",
 	"license": "MIT",
 	"bin": "dist/cli.js",
 	"engines": {
 		"node": ">=10"
+	},
+	"author": {
+		"email": "mark.murray.ie@gmail.com",
+		"name": "Mark Murray",
+		"url": "https://markmurray.co"
 	},
 	"scripts": {
 		"build": "tsc && chmod +x dist/cli.js",
