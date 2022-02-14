@@ -91,7 +91,7 @@ const ListTasks: FC<{ date: string; tasks?: Task[] }> = ({ date, tasks }) => {
 			<Text italic>{`${io.getDayName(date)}, ${date}
 			`}</Text>
 			<Space />
-			<Text underline>{`Task`}</Text>
+			<Text underline>Entries</Text>
 			{tasks?.length ? (
 				tasks?.map(({ id, content }, i) => (
 					<Text key={id}>{`	${i + 1}. ${content}`}</Text>
