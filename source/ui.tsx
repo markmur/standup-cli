@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import { Text } from "ink";
 import meow from "meow";
+import Gradient from "ink-gradient";
+import BigText from "ink-big-text";
+
+// Local
 import { SUPPORTED_COMMANDS } from "./cli";
 import io, { Task } from "./io";
 
@@ -11,15 +15,6 @@ interface Props {
 }
 
 const AddCommand: FC<{ args: Props["args"] }> = ({ args }) => {
-	// const [state, setState] = React.useState("")
-	// useInput((input, key) => {
-	// 	if (key.return) {
-	// 		return handleAddTask()
-	// 	}
-
-	// 	setState(input)
-	// });
-
 	const handleAddTask = () => {
 		if (Array.isArray(args) && args.length > 0 && typeof args[0] === "string") {
 			io.addTask(args?.[0]);
@@ -38,9 +33,9 @@ const AddCommand: FC<{ args: Props["args"] }> = ({ args }) => {
 const ListTasks: FC<{ date: string; tasks?: Task[] }> = ({ date, tasks }) => {
 	return (
 		<>
-			<Text underline bold color="green">
-				Standup
-			</Text>
+			<Gradient name="rainbow">
+				<BigText text="Standup" />
+			</Gradient>
 			<Text italic>{`${io.getDayName(date)}, ${date}
 			`}</Text>
 			<Text></Text>

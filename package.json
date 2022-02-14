@@ -16,8 +16,12 @@
 		"dist/cli.js"
 	],
 	"dependencies": {
+		"@types/ink-big-text": "^1.2.1",
+		"@types/ink-gradient": "^2.0.1",
 		"@types/uuid": "^8.3.4",
 		"ink": "^3.2.0",
+		"ink-big-text": "^1.2.0",
+		"ink-gradient": "^2.0.0",
 		"meow": "^9.0.0",
 		"react": "^17.0.2",
 		"uuid": "^8.3.2"
