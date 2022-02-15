@@ -93,7 +93,7 @@ class TaskManager {
 	}
 
 	getTasks(date: string = this.getTodaysDate()) {
-		return this.contents.tasks[date];
+		return this.contents.tasks[date] ?? [];
 	}
 
 	addTask(task: string) {

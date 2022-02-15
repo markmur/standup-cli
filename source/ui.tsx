@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Text} from "ink";
+import {Box, Text, Newline} from "ink";
 import meow from "meow";
 import Gradient from "ink-gradient";
 import BigText from "ink-big-text";
@@ -14,8 +14,6 @@ interface Props {
 	flags?: meow.Flag<any, any>[];
 }
 
-const Space = () => <Text></Text>;
-
 const RemoveCommand: FC<{args: Props["args"]}> = ({args = []}) => {
 	const [number] = args;
 
@@ -25,10 +23,10 @@ const RemoveCommand: FC<{args: Props["args"]}> = ({args = []}) => {
 				<Text color="red" bold>
 					Invalid args.
 				</Text>
-				<Space />
+				<Newline />
 				<Text italic>Example usage:</Text>
 				<Text>$ standup remove 1</Text>
-				<Space />
+				<Newline />
 			</>
 		);
 	}
@@ -82,28 +80,38 @@ const AddCommand: FC<{args: Props["args"]}> = ({args}) => {
 	);
 };
 
-const ListTasks: FC<{date: string; tasks?: Task[]}> = ({date, tasks}) => {
+const Banner = () => (
+	<Gradient name="rainbow">
+		<BigText text="Standup" />
+	</Gradient>
+);
+
+const formatDate = (date: string) => `${io.getDayName(date)}, ${date}`;
+
+const ListTasks: FC<{date: string; tasks: Task[]}> = ({date, tasks = []}) => {
+	if (!tasks.length) {
+		return (
+			<Box>
+				<Text italic>No entries found</Text>
+			</Box>
+		);
+	}
+
 	return (
 		<>
-			<Gradient name="rainbow">
-				<BigText text="Standup" />
-			</Gradient>
-			<Text italic>{`${io.getDayName(date)}, ${date}
-			`}</Text>
-			<Space />
-			<Text underline>Entries</Text>
-			{tasks?.length ? (
-				tasks?.map(({id, content}, i) => (
-					<Text key={id}>{`	${i + 1}. ${content}`}</Text>
-				))
-			) : (
-				<Text italic>No entries found</Text>
-			)}
-			<Text>
-				{`
-				
-				`}
+			<Text underline italic color="gray">
+				{date}
 			</Text>
+
+			{tasks.map(({id, content}, i) => (
+				<Box key={id}>
+					<Text>
+						{i + 1}. {content}
+					</Text>
+				</Box>
+			))}
+
+			<Newline />
 		</>
 	);
 };
@@ -126,8 +134,21 @@ const App: FC<Props> = ({command, args}) => {
 		case SUPPORTED_COMMANDS.LIST:
 		case SUPPORTED_COMMANDS.TODAY:
 		default:
-			tasks = io.getTasks();
-			return <ListTasks date={today} tasks={tasks} />;
+			const todaysTasks = io.getTasks();
+			const yesterdaysTasks = io.getTasks(yesterday);
+			return (
+				<>
+					<Banner />
+					<ListTasks
+						date={`${formatDate(yesterday)} (Yesterday)`}
+						tasks={yesterdaysTasks}
+					/>
+					<ListTasks
+						date={`${formatDate(today)} (Today)`}
+						tasks={todaysTasks}
+					/>
+				</>
+			);
 	}
 };
 
