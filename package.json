@@ -1,6 +1,6 @@
 {
 	"name": "standup-cli",
-	"version": "0.1.9",
+	"version": "0.1.10",
 	"license": "MIT",
 	"bin": {
 		"standup": "dist/cli.js"
