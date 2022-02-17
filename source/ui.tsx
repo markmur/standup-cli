@@ -5,7 +5,7 @@ import Gradient from "ink-gradient";
 import BigText from "ink-big-text";
 
 // Local
-import {SUPPORTED_COMMANDS} from "./cli";
+import {SupportedCommands} from "./cli";
 import io, {Task} from "./io";
 
 interface Props {
@@ -122,17 +122,17 @@ const App: FC<Props> = ({command, args}) => {
 	const yesterday = io.getYesterdaysDate();
 
 	switch (command) {
-		case SUPPORTED_COMMANDS.ADD:
+		case SupportedCommands.ADD:
 			return <AddCommand args={args} />;
-		case SUPPORTED_COMMANDS.REMOVE:
+		case SupportedCommands.REMOVE:
 			return <RemoveCommand args={args} />;
-		case SUPPORTED_COMMANDS.CLEAR:
+		case SupportedCommands.CLEAR:
 			return <ClearCommand />;
-		case SUPPORTED_COMMANDS.YESTERDAY:
+		case SupportedCommands.YESTERDAY:
 			tasks = io.getTasks(yesterday);
 			return <ListTasks date={yesterday} tasks={tasks} />;
-		case SUPPORTED_COMMANDS.LIST:
-		case SUPPORTED_COMMANDS.TODAY:
+		case SupportedCommands.LIST:
+		case SupportedCommands.TODAY:
 		default:
 			const todaysTasks = io.getTasks();
 			const yesterdaysTasks = io.getTasks(yesterday);

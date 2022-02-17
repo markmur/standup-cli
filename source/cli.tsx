@@ -4,7 +4,12 @@ import {render} from "ink";
 import meow from "meow";
 import App from "./ui";
 
-export enum SUPPORTED_COMMANDS {
+function clearConsole() {
+	process.stdout.write("\u001b[3J\u001b[2J\u001b[1J");
+	console.clear();
+}
+
+export enum SupportedCommands {
 	ADD = "add",
 	LIST = "list",
 	TODAY = "today",
@@ -48,12 +53,34 @@ const cli = meow(
 	  $ standup yesterday
 	  $ standup remove 1
 	  $ standup clear
+
+	Flags
+		--noClear, -n		Do not clear the console for "list", "today" and "yesterday" commands
 `,
 	{
-		flags: {},
+		flags: {
+			noClear: {
+				type: "boolean",
+				alias: "n",
+				default: false,
+				isMultiple: false,
+				isRequired: false,
+			},
+		},
 	},
 );
 
 const {command, args} = getCommand(cli);
+
+if (
+	[
+		SupportedCommands.LIST,
+		SupportedCommands.TODAY,
+		SupportedCommands.YESTERDAY,
+	].includes(command as SupportedCommands) &&
+	!cli.flags.noClear
+) {
+	clearConsole();
+}
 
 render(<App command={command} args={args} />);
