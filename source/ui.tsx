@@ -89,27 +89,27 @@ const Banner = () => (
 const formatDate = (date: string) => `${io.getDayName(date)}, ${date}`;
 
 const ListTasks: FC<{date: string; tasks: Task[]}> = ({date, tasks = []}) => {
-	if (!tasks.length) {
-		return (
-			<Box>
-				<Text italic>No entries found</Text>
-			</Box>
-		);
-	}
-
 	return (
 		<>
 			<Text underline italic color="gray">
 				{date}
 			</Text>
 
-			{tasks.map(({id, content}, i) => (
-				<Box key={id}>
-					<Text>
-						{i + 1}. {content}
+			{tasks.length > 0 ? (
+				tasks.map(({id, content}, i) => (
+					<Box key={id}>
+						<Text>
+							{i + 1}. {content}
+						</Text>
+					</Box>
+				))
+			) : (
+				<Box>
+					<Text italic color="gray">
+						No entries yet
 					</Text>
 				</Box>
-			))}
+			)}
 
 			<Newline />
 		</>
@@ -119,6 +119,17 @@ const ListTasks: FC<{date: string; tasks: Task[]}> = ({date, tasks = []}) => {
 const App: FC<Props> = ({command, args}) => {
 	let tasks;
 	const today = io.getTodaysDate();
+	const todayDayName = io.getDayName(today);
+
+	let previous = io.getYesterdaysDate();
+	let previousDayName = "Yesterday";
+
+	// If it's Monday, get Friday's entries instead of Sunday
+	if (todayDayName.toLowerCase() === "monday") {
+		previous = io.getDateMinusDays(3);
+		previousDayName = io.getDayName(previous);
+	}
+
 	const yesterday = io.getYesterdaysDate();
 
 	switch (command) {
@@ -135,13 +146,13 @@ const App: FC<Props> = ({command, args}) => {
 		case SupportedCommands.TODAY:
 		default:
 			const todaysTasks = io.getTasks();
-			const yesterdaysTasks = io.getTasks(yesterday);
+			const previousTasks = io.getTasks(previous);
 			return (
 				<>
 					<Banner />
 					<ListTasks
-						date={`${formatDate(yesterday)} (Yesterday)`}
-						tasks={yesterdaysTasks}
+						date={`${formatDate(yesterday)} (${previousDayName})`}
+						tasks={previousTasks}
 					/>
 					<ListTasks
 						date={`${formatDate(today)} (Today)`}
