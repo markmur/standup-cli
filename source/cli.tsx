@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import React from "react";
 import {render} from "ink";
-import meow from "meow";
+import meow, {BooleanFlag, StringFlag} from "meow";
 import App from "./ui";
 
 function clearConsole() {
@@ -20,19 +20,26 @@ export enum SupportedCommands {
 
 const DEFAULT = "list";
 
+export interface Flags extends meow.AnyFlags {
+	noClear: BooleanFlag;
+	pr: StringFlag;
+}
+
 function getCommand(cli: meow.Result<any>): {
 	command: string;
 	args: string[];
+	flags: meow.Result<any>["flags"];
 } {
 	const [command = DEFAULT, ...args] = cli.input;
 
 	return {
 		command,
 		args,
+		flags: cli.flags,
 	};
 }
 
-const cli = meow(
+const cli = meow<Flags>(
 	`
 	Usage
 	  $ standup
@@ -48,6 +55,7 @@ const cli = meow(
 	Examples
 	  $ standup
 	  $ standup add "New task for today"
+		$ standup add "New feature" --pr "https://github.com/markmur/standup-cli/pulls/8"
 	  $ standup list
 	  $ standup today
 	  $ standup yesterday
@@ -56,6 +64,7 @@ const cli = meow(
 
 	Flags
 		--noClear, -n		Do not clear the console for "list", "today" and "yesterday" commands
+		--pr						Add link to Github pull request
 `,
 	{
 		flags: {
@@ -66,11 +75,16 @@ const cli = meow(
 				isMultiple: false,
 				isRequired: false,
 			},
+			pr: {
+				type: "string",
+				isRequired: false,
+				isMultiple: false,
+			},
 		},
 	},
 );
 
-const {command, args} = getCommand(cli);
+const {command, args, flags} = getCommand(cli);
 
 if (
 	[
@@ -83,4 +97,4 @@ if (
 	clearConsole();
 }
 
-render(<App command={command} args={args} />);
+render(<App command={command} args={args} flags={flags} />);

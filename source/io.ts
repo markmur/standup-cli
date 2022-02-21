@@ -7,11 +7,15 @@ export interface Task {
 	id: string;
 	created_at: string;
 	content: string;
+	github_link?: string;
 }
 
 export interface Model {
 	tasks: Record<string, Task[]>;
 }
+
+const RE_GITHUB =
+	/(https?:\/\/)?github\.com\/[\w-_.]+\/[\w-_.]+\/(issues|pulls)\/\d+/gi;
 
 class TaskManager {
 	constructor() {
@@ -76,6 +80,19 @@ class TaskManager {
 		this.contents = JSON.parse(contents);
 	}
 
+	private validateGithubLink(link: string = "") {
+		const trimmed = link.trim();
+		const valid = RE_GITHUB.test(link);
+
+		if (!trimmed || !valid) {
+			throw new Error(`"${link}" is not a valid GitHub link. Please ensure your link is in the following format:
+
+https://github.com/owner/repo/pulls/123
+github.com/owner/repo/issues/123
+			`);
+		}
+	}
+
 	// PUBLIC
 
 	getTodaysDate() {
@@ -100,7 +117,11 @@ class TaskManager {
 		return this.contents.tasks[date] ?? [];
 	}
 
-	addTask(task: string) {
+	addTask(task: string, link?: string) {
+		if (link) {
+			this.validateGithubLink(link);
+		}
+
 		const date = this.getTodaysDate();
 		const clonedContents = {...this.contents};
 
@@ -108,6 +129,7 @@ class TaskManager {
 			id: uuid(),
 			created_at: date,
 			content: task,
+			github_link: link,
 		};
 
 		if (Array.isArray(clonedContents.tasks[date])) {
