@@ -1,8 +1,9 @@
 import React, {FC} from "react";
-import {Box, Text, Newline} from "ink";
 import meow from "meow";
+import {Box, Text, Newline} from "ink";
 import Gradient from "ink-gradient";
 import BigText from "ink-big-text";
+import Link from "ink-link";
 
 // Local
 import {SupportedCommands} from "./cli";
@@ -11,7 +12,7 @@ import io, {Task} from "./io";
 interface Props {
 	command: string;
 	args?: string[];
-	flags?: meow.Flag<any, any>[];
+	flags?: meow.Result<any>["flags"];
 }
 
 const RemoveCommand: FC<{args: Props["args"]}> = ({args = []}) => {
@@ -62,10 +63,13 @@ const ClearCommand: FC = () => {
 	);
 };
 
-const AddCommand: FC<{args: Props["args"]}> = ({args}) => {
+const AddCommand: FC<{args: Props["args"]; flags?: Props["flags"]}> = ({
+	args,
+	flags = {},
+}) => {
 	const handleAddTask = () => {
 		if (Array.isArray(args) && args.length > 0 && typeof args[0] === "string") {
-			io.addTask(args?.[0]);
+			io.addTask(args?.[0], flags["pr"] ? (flags["pr"] as string) : undefined);
 		}
 	};
 
@@ -88,6 +92,17 @@ const Banner = () => (
 
 const formatDate = (date: string) => `${io.getDayName(date)}, ${date}`;
 
+const formatGithubLink = (link: string) => {
+	try {
+		const url = new URL(link);
+		const [owner, repo, , number] = url.pathname.slice(1).split("/");
+
+		return `${owner}/${repo}#${number}`;
+	} catch {
+		return null;
+	}
+};
+
 const ListTasks: FC<{date: string; tasks: Task[]}> = ({date, tasks = []}) => {
 	return (
 		<>
@@ -96,10 +111,15 @@ const ListTasks: FC<{date: string; tasks: Task[]}> = ({date, tasks = []}) => {
 			</Text>
 
 			{tasks.length > 0 ? (
-				tasks.map(({id, content}, i) => (
+				tasks.map(({id, content, github_link}, i) => (
 					<Box key={id}>
 						<Text>
-							{i + 1}. {content}
+							{i + 1}. {content}{" "}
+							{github_link && (
+								<Link url={github_link}>
+									- <Text>{formatGithubLink(github_link)}</Text>
+								</Link>
+							)}
 						</Text>
 					</Box>
 				))
@@ -116,7 +136,7 @@ const ListTasks: FC<{date: string; tasks: Task[]}> = ({date, tasks = []}) => {
 	);
 };
 
-const App: FC<Props> = ({command, args}) => {
+const App: FC<Props> = ({command, args, flags}) => {
 	let tasks;
 	const today = io.getTodaysDate();
 	const todayDayName = io.getDayName(today);
@@ -134,7 +154,7 @@ const App: FC<Props> = ({command, args}) => {
 
 	switch (command) {
 		case SupportedCommands.ADD:
-			return <AddCommand args={args} />;
+			return <AddCommand args={args} flags={flags} />;
 		case SupportedCommands.REMOVE:
 			return <RemoveCommand args={args} />;
 		case SupportedCommands.CLEAR:
