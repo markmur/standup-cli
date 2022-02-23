@@ -17,11 +17,11 @@ Usage
   $ standup
 
 Commands
-  list				(default) List standup tasks for today
-  today				(alias) Run "list" command
+  list				List standup tasks for today (default)
+  today				Run "list" command (alias)
   yesterday			List standup stasks for yesterday
   add				Add a task for today
-  remove <number>			Remove task from today
+  remove <number>		Remove task from today
   clear				Clear all tasks for today
 
 Examples
@@ -35,6 +35,6 @@ Examples
   $ standup clear
 
 Flags
-  --noClear, -n		Do not clear the console for "list", "today" and "yesterday" commands
-  --pr						Add link to Github pull request
+  --noClear, -n			Do not clear the console
+  --pr				Add link to Github pull request
 ```
