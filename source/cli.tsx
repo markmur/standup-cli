@@ -55,7 +55,7 @@ const cli = meow<Flags>(
 	Examples
 	  $ standup
 	  $ standup add "New task for today"
-		$ standup add "New feature" --pr "https://github.com/markmur/standup-cli/pulls/8"
+		$ standup add "New feature" --pr "https://github.com/markmur/standup-cli/pull/8"
 	  $ standup list
 	  $ standup today
 	  $ standup yesterday

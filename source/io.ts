@@ -15,7 +15,7 @@ export interface Model {
 }
 
 const RE_GITHUB =
-	/(https?:\/\/)?github\.com\/[\w-_.]+\/[\w-_.]+\/(issues|pulls)\/\d+/gi;
+	/(https?:\/\/)?github\.com\/[\w-_.]+\/[\w-_.]+\/(issues|pulls|pull)\/\d+/gi;
 
 class TaskManager {
 	constructor() {
