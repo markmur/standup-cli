@@ -150,8 +150,6 @@ const App: FC<Props> = ({command, args, flags}) => {
 		previousDayName = io.getDayName(previous);
 	}
 
-	const yesterday = io.getYesterdaysDate();
-
 	switch (command) {
 		case SupportedCommands.ADD:
 			return <AddCommand args={args} flags={flags} />;
@@ -160,8 +158,8 @@ const App: FC<Props> = ({command, args, flags}) => {
 		case SupportedCommands.CLEAR:
 			return <ClearCommand />;
 		case SupportedCommands.YESTERDAY:
-			tasks = io.getTasks(yesterday);
-			return <ListTasks date={yesterday} tasks={tasks} />;
+			tasks = io.getTasks(previous);
+			return <ListTasks date={previous} tasks={tasks} />;
 		case SupportedCommands.LIST:
 		case SupportedCommands.TODAY:
 		default:
@@ -171,7 +169,7 @@ const App: FC<Props> = ({command, args, flags}) => {
 				<>
 					<Banner />
 					<ListTasks
-						date={`${formatDate(yesterday)} (${previousDayName})`}
+						date={`${formatDate(previous)} (${previousDayName})`}
 						tasks={previousTasks}
 					/>
 					<ListTasks
